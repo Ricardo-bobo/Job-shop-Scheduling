@@ -1,31 +1,32 @@
 function [Time_out,timing] = project(student, teacher, Time)
 %%
-%³õÊ¼Êý¾Ý¼°Êý¾ÝÔ¤´¦Àí
+%åˆå§‹æ•°æ®åŠæ•°æ®é¢„å¤„ç†
+%è¿™é‡Œçš„studentå€¼çš„æ˜¯å·¥ä»¶ä¸ªä½“ï¼ŒteacheræŒ‡çš„æ˜¯æ“ä½œå·¥äººä¸Žæœºå™¨å·¥ä½ï¼Œclasså€¼çš„æ˜¯å·¥ä»¶æ‰€éœ€è¦ç»è¿‡çš„å·¥åºåŠæ“ä½œæ—¶é•¿
 N = length(student);
 
 for i = 1:N
-    class_num = 1:length(student{i}.cls(1, :));    %ÎªÁËºóÃæ±È½ÏºÏ²¢ÁËÄÄ¼¸Ïî
+    class_num = 1:length(student{i}.cls(1, :));    %ä¸ºäº†åŽé¢æ¯”è¾ƒåˆå¹¶äº†å“ªå‡ é¡¹
     [class_resort, class_site] = unique(student{i}.cls(1, :), 'first');
-    class_site = class_site';                      %°ÑÎ»ÖÃÁÐÏòÁ¿×ª»¯ÎªÐÐÏòÁ¿
+    class_site = class_site';                      %æŠŠä½ç½®åˆ—å‘é‡è½¬åŒ–ä¸ºè¡Œå‘é‡
     time_resort = student{i}.cls(2, class_site);
-    merge_site = setdiff(class_num, class_site);   %merge_site±íÊ¾ÄÄ¼¸¸öÊý¾Ý±»ºÏ²¢ÁË
+    merge_site = setdiff(class_num, class_site);   %merge_siteè¡¨ç¤ºå“ªå‡ ä¸ªæ•°æ®è¢«åˆå¹¶äº†
     for j = merge_site
-        classes = student{i}.cls(1, j);            %±»ºÏ²¢Êý¾Ý¶ÔÓ¦ÄÄ¸öclass
-        times = student{i}.cls(2, j);              %±»ºÏ²¢Êý¾Ý¶ÔÓ¦µÄtime
+        classes = student{i}.cls(1, j);            %è¢«åˆå¹¶æ•°æ®å¯¹åº”å“ªä¸ªclass
+        times = student{i}.cls(2, j);              %è¢«åˆå¹¶æ•°æ®å¯¹åº”çš„time
         sites = find(class_resort == classes);
         time_resort(sites) = time_resort(sites) + times;
     end
-    %Êä³ö´¦ÀíºóµÄÐÂµÄÊý¾Ý£¬ÕâÀï×¢ÒâÒÑ¾­ÖØÐÂ¶¨ÒåÁËÒ»¸östudents,Ö®ºó¶¼ÓÃÕâ¸ö´¦ÀíºóµÄstudents
+    %è¾“å‡ºå¤„ç†åŽçš„æ–°çš„æ•°æ®ï¼Œè¿™é‡Œæ³¨æ„å·²ç»é‡æ–°å®šä¹‰äº†ä¸€ä¸ªstudents,ä¹‹åŽéƒ½ç”¨è¿™ä¸ªå¤„ç†åŽçš„students
     students{i}.name = student{i}.name;
     students{i}.cls(1, :) = class_resort;
     students{i}.cls(2, :) = time_resort;
 end
-% clear class_num class_resort class_site merge_site times classes sites time_resort       %È¥µô¶àÓàµÄ±äÁ¿
+% clear class_num class_resort class_site merge_site times classes sites time_resort       %åŽ»æŽ‰å¤šä½™çš„å˜é‡
 
 %%
-%µü´úÇ°Êý¾Ý´¦Àí(×éºÃ²¹Áã¾ØÕó)
+%è¿­ä»£å‰æ•°æ®å¤„ç†(ç»„å¥½è¡¥é›¶çŸ©é˜µ)
 
-%°ÑÑ§Éú¿Î±í»ã³ÉÒ»¸ö¾ØÕó
+%æŠŠå­¦ç”Ÿè¯¾è¡¨æ±‡æˆä¸€ä¸ªçŸ©é˜µ
 classes = cell(N, 1);
 for i = 1:N
     b1 = [0]; b2 = [0, 0]; b3 = [0, 0, 0]; b4 = [0, 0, 0, 0]; b5 = [0, 0, 0, 0, 0];
@@ -42,11 +43,11 @@ for i = 1:N
         classes{i} = [classes{i}, b1];
     end
 end
-classes = cell2mat(classes);        %´Ë´¦µÄclassesÎªËùÓÐÍ¬Ñ§¿Î±í×é³ÉµÄ²¹0¾ØÕó£¨¶Ô¿Õ¿Î±í½øÐÐÁË²¹0²Ù×÷£©
-classes_copy = classes;             %¸´ÖÆÒ»¸öÔ­classes
+classes = cell2mat(classes);        %æ­¤å¤„çš„classesä¸ºæ‰€æœ‰åŒå­¦è¯¾è¡¨ç»„æˆçš„è¡¥0çŸ©é˜µï¼ˆå¯¹ç©ºè¯¾è¡¨è¿›è¡Œäº†è¡¥0æ“ä½œï¼‰
+classes_copy = classes;             %å¤åˆ¶ä¸€ä¸ªåŽŸclasses
 
 
-%½«ËùÓÐÑ§Éú¶ÔÓ¦µÄ¿ÎÊ±Ê±³¤²¹Áã£¬×é³ÉÒ»¸ö¾ØÕó
+%å°†æ‰€æœ‰å­¦ç”Ÿå¯¹åº”çš„è¯¾æ—¶æ—¶é•¿è¡¥é›¶ï¼Œç»„æˆä¸€ä¸ªçŸ©é˜µ
 times = cell(N, 1);
 for i = 1:N
     b1 = [0]; b2 = [0, 0]; b3 = [0, 0, 0]; b4 = [0, 0, 0, 0]; b5 = [0, 0, 0, 0, 0];
@@ -63,18 +64,18 @@ for i = 1:N
         times{i} = [times{i}, b1];
     end
 end
-times = cell2mat(times);             %´Ë´¦µÄbÎªËùÓÐÍ¬Ñ§ÉÏ¿ÎÊ±¼ä×é³ÉµÄ²¹0¾ØÕó£¨¶Ô¿Õ¿Î±í½øÐÐÁË²¹0²Ù×÷£©
-times_copy = times;                 %¸´ÖÆÒ»¸öÔ­times
-clear b1 b2 b3 b4 b5        %È¥µô¶àÓàµÄ±äÁ¿
+times = cell2mat(times);             %æ­¤å¤„çš„bä¸ºæ‰€æœ‰åŒå­¦ä¸Šè¯¾æ—¶é—´ç»„æˆçš„è¡¥0çŸ©é˜µï¼ˆå¯¹ç©ºè¯¾è¡¨è¿›è¡Œäº†è¡¥0æ“ä½œï¼‰
+times_copy = times;                 %å¤åˆ¶ä¸€ä¸ªåŽŸtimes
+clear b1 b2 b3 b4 b5        %åŽ»æŽ‰å¤šä½™çš„å˜é‡
 
 
 
 %%
-%¿ªÊ¼µü´ú      
-timing = min(Time);          %ÉèÖÃÒ»¸ö³õÊ¼Ê±¼ä£¬ºóÃæµÄTime_outÀïÃæµÄbegintimeºÍendtime¶¼ÒÔtiming=0Îª»ù×¼¼ÆÊ± 
-nn = 2;                      %¼ÇÂ¼ÏÂÒ»´ÎÌøÔ¾È¡×îÐ¡ÖµÓ¦¸ÃÈ¥µ¹ÊýµÚ¼¸¸ö
-begintime = [];              %begintime¿É¸ù¾ÝºóÃæµÄendtime¼õÈ¥¶ÔÓ¦µÄ¿Î³¤Ê±¼ä¿ÉµÃ
-endtime = zeros(N, 6);       %endtimeÔÚÍê³ÉµÄÊ±ºò¼ÇÂ¼
+%å¼€å§‹è¿­ä»£      
+timing = min(Time);          %è®¾ç½®ä¸€ä¸ªåˆå§‹æ—¶é—´ï¼ŒåŽé¢çš„Time_outé‡Œé¢çš„begintimeå’Œendtimeéƒ½ä»¥timing=0ä¸ºåŸºå‡†è®¡æ—¶ 
+nn = 2;                      %è®°å½•ä¸‹ä¸€æ¬¡è·³è·ƒå–æœ€å°å€¼åº”è¯¥åŽ»å€’æ•°ç¬¬å‡ ä¸ª
+begintime = [];              %begintimeå¯æ ¹æ®åŽé¢çš„endtimeå‡åŽ»å¯¹åº”çš„è¯¾é•¿æ—¶é—´å¯å¾—
+endtime = zeros(N, 6);       %endtimeåœ¨å®Œæˆçš„æ—¶å€™è®°å½•
 AAAA = ones(N, 6);
 isn = zeros(N, 6);
 tf = 0;
@@ -83,22 +84,22 @@ now_time = [];
 num11 = 0; num22 = 0; num33 = 0; num44 = 0; num55 = 0; num66 = 0; 
 
 while tf ~= 1;
-    i = 1;                   %ÕâÀïÉè¶¨iÒ»Ö±Îª1£¬Ô­ÒòÊÇÎÒÃÇ¶ÔclassºÍtime½øÐÐÍÆ½ø£¬¼´×îÇ°ÅÅµÄÎªÕýÔÚ½øÐÐµÄ
+    i = 1;                   %è¿™é‡Œè®¾å®šiä¸€ç›´ä¸º1ï¼ŒåŽŸå› æ˜¯æˆ‘ä»¬å¯¹classå’Œtimeè¿›è¡ŒæŽ¨è¿›ï¼Œå³æœ€å‰æŽ’çš„ä¸ºæ­£åœ¨è¿›è¡Œçš„
     
-    for j = 1:N ;            %´Ë´¦µÄtime_sliceÎª¶ÔµÚi½×¶Î½øÐÐµÄ¿Î³ÌÇÐÆ¬£¬±ãÓÚÏÂÒ»²½½øÐÐ¿Î³ÌÊýÁ¿Í³¼Æ£¬ÅÐ¶ÏteacherÊÇ·ñ×ã¹»
+    for j = 1:N ;            %æ­¤å¤„çš„time_sliceä¸ºå¯¹ç¬¬ié˜¶æ®µè¿›è¡Œçš„è¯¾ç¨‹åˆ‡ç‰‡ï¼Œä¾¿äºŽä¸‹ä¸€æ­¥è¿›è¡Œè¯¾ç¨‹æ•°é‡ç»Ÿè®¡ï¼Œåˆ¤æ–­teacheræ˜¯å¦è¶³å¤Ÿ
     	class_slice(j) = classes(j, i) ;  
     end
-    for k = 1:N;             %´Ë´¦µÄtime_sliceÎª¶ÔµÚi½×¶Î½øÐÐµÄ¿Î³ÌÊ±¼äÇÐÆ¬£¬±ãÓÚÏÂÒ»²½½øÐÐ¿Î³ÌÊ±¼äÍ³¼Æ
+    for k = 1:N;             %æ­¤å¤„çš„time_sliceä¸ºå¯¹ç¬¬ié˜¶æ®µè¿›è¡Œçš„è¯¾ç¨‹æ—¶é—´åˆ‡ç‰‡ï¼Œä¾¿äºŽä¸‹ä¸€æ­¥è¿›è¡Œè¯¾ç¨‹æ—¶é—´ç»Ÿè®¡
         time_slice(k) = times(k, i);
     end
-    %¶ÔÕâÒ»½×¶ÎµÄ¸÷¸ö¿ÆÄ¿µÄÈËÊý½øÐÐÍ³¼Æ
+    %å¯¹è¿™ä¸€é˜¶æ®µçš„å„ä¸ªç§‘ç›®çš„äººæ•°è¿›è¡Œç»Ÿè®¡
     num1 = length(find(class_slice==1)); num2 = length(find(class_slice==2)); num3 = length(find(class_slice==3));   
     num4 = length(find(class_slice==4)); num5 = length(find(class_slice==5)); num6 = length(find(class_slice==6));
-    %ÓÐÄÄ¼¸¸öÈËÒªÉÏ¶ÔÓ¦µÄ¿ÆÄ¿
+    %æœ‰å“ªå‡ ä¸ªäººè¦ä¸Šå¯¹åº”çš„ç§‘ç›®
     who1 = find(class_slice==1); who2 = find(class_slice==2); who3 = find(class_slice==3);      
     who4 = find(class_slice==4); who5 = find(class_slice==5); who6 = find(class_slice==6); 
     
-    %¶Ô±ÈÈËÊý£¬ÅÐ¶ÏÂß¼­
+    %å¯¹æ¯”äººæ•°ï¼Œåˆ¤æ–­é€»è¾‘
     if timing >= Time(1,1)
         if num11 < teacher(1)
             if num1 <= teacher(1)
@@ -201,41 +202,41 @@ while tf ~= 1;
         end
     end
     
-    now_class = [now_class , zeros(1,N-length(now_class))];     % ²¹Áã²Ù×÷
+    now_class = [now_class , zeros(1,N-length(now_class))];     % è¡¥é›¶æ“ä½œ
     now_time = [now_time , zeros(1,N-length(now_time))];
    
-    %ÈËÊý·ÖÎöºó£¬´ËÊ±class_sliceÖÐ¶ÔÓ¦0µÄÎ»ÖÃ¼´ÕýÔÚ½øÐÐclassµÄ£¬now_timeÎªÆä¾àÀëendingµÄÊ±¼ä
-    classfree_site = find(now_class == 0);   %classfree_site±íÊ¾ÕýÔÚ¿ÕÏÐµÄÎ»ÖÃ
-    now_time(find(now_time == 0)) = NaN;    %±ãÓÚÏÂÒ»ÐÐÕÒ³öleast_time,°ÑÎª0µÄÖµ±äÎªNaN
+    %äººæ•°åˆ†æžåŽï¼Œæ­¤æ—¶class_sliceä¸­å¯¹åº”0çš„ä½ç½®å³æ­£åœ¨è¿›è¡Œclassçš„ï¼Œnow_timeä¸ºå…¶è·ç¦»endingçš„æ—¶é—´
+    classfree_site = find(now_class == 0);   %classfree_siteè¡¨ç¤ºæ­£åœ¨ç©ºé—²çš„ä½ç½®
+    now_time(find(now_time == 0)) = NaN;    %ä¾¿äºŽä¸‹ä¸€è¡Œæ‰¾å‡ºleast_time,æŠŠä¸º0çš„å€¼å˜ä¸ºNaN
     now_class(find(now_class == 0)) = NaN;
-    least_time = min(now_time);             %ÕÒ³öendtime×îÐ¡µÄÖµ
+    least_time = min(now_time);             %æ‰¾å‡ºendtimeæœ€å°çš„å€¼
     if numel(find(isnan(now_class))) == length(students)
         paitime = sort(Time);
         least_time = paitime(nn) - timing;
         nn = nn + 1;
     end
-    timing = timing + least_time;           %¼ÇÂ¼ÉÏÊöµÄleast_time£¬±íÊ¾Õâ¶ÎÊ±¼ä¹ýÈ¥ÁË
-    now_time(find(~isnan(now_class))) = now_time(find(~isnan(now_class))) - least_time;       %ÉÏÒ»ÐÐ±íÊ¾Ê±¼ä¹ýÈ¥ÁË£¬ÄÇ¶ÔÓ¦µÄclassingµÄÊ±¼ä×ÔÈ»¶¼Òª¼õÈ¥least_time
+    timing = timing + least_time;           %è®°å½•ä¸Šè¿°çš„least_timeï¼Œè¡¨ç¤ºè¿™æ®µæ—¶é—´è¿‡åŽ»äº†
+    now_time(find(~isnan(now_class))) = now_time(find(~isnan(now_class))) - least_time;       %ä¸Šä¸€è¡Œè¡¨ç¤ºæ—¶é—´è¿‡åŽ»äº†ï¼Œé‚£å¯¹åº”çš„classingçš„æ—¶é—´è‡ªç„¶éƒ½è¦å‡åŽ»least_time
     
-    %ÒÔÏÂÁ½¸öÊý¾ÝÔÚÏÂÒ»²½½øÐÐ¸üÐÂclass-time¾ØÕóÊ±ÒªÓÃµ½
-    classend_site = find(now_time == 0);     %classend_site±íÊ¾ÕâÒ»Ê±¿ÌendclassµÄÎ»ÖÃ  
+    %ä»¥ä¸‹ä¸¤ä¸ªæ•°æ®åœ¨ä¸‹ä¸€æ­¥è¿›è¡Œæ›´æ–°class-timeçŸ©é˜µæ—¶è¦ç”¨åˆ°
+    classend_site = find(now_time == 0);     %classend_siteè¡¨ç¤ºè¿™ä¸€æ—¶åˆ»endclassçš„ä½ç½®  
 
-    %¸üÐÂ¿Î³Ì±íºÍÊ±¼ä±í
+    %æ›´æ–°è¯¾ç¨‹è¡¨å’Œæ—¶é—´è¡¨
     for m = classend_site
-        %ÕÒ³öclassend¶ÔÓ¦µÄÎ»ÖÃ£¬ÏÂÃæ»á¼ÇÂ¼ending_time
+        %æ‰¾å‡ºclassendå¯¹åº”çš„ä½ç½®ï¼Œä¸‹é¢ä¼šè®°å½•ending_time
         cl = class_slice(m);
-        a = find(classes_copy(m, :) == cl);      %½áÊøµÄÕâÃÅ¿ÎÔÚmÖÐÊÇµÚ¼¸ÃÅ
-        %´Ë²Ù×÷Îª½áÊøµÄÒ»À¸classÏòÇ°ÍÆ½øÒ»¸ñ
+        a = find(classes_copy(m, :) == cl);      %ç»“æŸçš„è¿™é—¨è¯¾åœ¨mä¸­æ˜¯ç¬¬å‡ é—¨
+        %æ­¤æ“ä½œä¸ºç»“æŸçš„ä¸€æ classå‘å‰æŽ¨è¿›ä¸€æ ¼
         classes(m ,1) = classes(m ,2);   
         classes(m ,2) = classes(m ,3);
         classes(m ,3) = classes(m ,4);
         classes(m ,4) = classes(m ,5);
         classes(m ,5) = classes(m ,6);
         classes(m ,6) = 0;
-        endtime(m, a) = timing ;         %¼ÇÂ¼¶ÔÓ¦¿ÎµÄending_time
-         %´Ë²Ù×÷Îª½áÊøµÄÒ»À¸timeÏòÇ°ÍÆ½øÒ»¸ñ
+        endtime(m, a) = timing ;         %è®°å½•å¯¹åº”è¯¾çš„ending_time
+         %æ­¤æ“ä½œä¸ºç»“æŸçš„ä¸€æ timeå‘å‰æŽ¨è¿›ä¸€æ ¼
         for j = classfree_site
-        	now_time(j) = time_slice(j);  %¸øÃ»ÉÏ¿ÎµÄÎ»ÖÃ¼ÇÂ¼Ô­±¾µÄÊ±¼ä
+        	now_time(j) = time_slice(j);  %ç»™æ²¡ä¸Šè¯¾çš„ä½ç½®è®°å½•åŽŸæœ¬çš„æ—¶é—´
         end
         for j = 1:N
             times(j, 1) = now_time(j);
@@ -263,27 +264,27 @@ while tf ~= 1;
         now_class(classend_site) = 0;
         now_time(classend_site) = 0;
     end
-    num11 = length(find(now_class==1)); num22 = length(find(now_class==2)); num33 = length(find(now_class==3));   %ÆäËûÈË½áÊøÊ±£¬»¹ÔÚÉÏ¿ÎµÄÈËÓÐ¼¸¸ö
+    num11 = length(find(now_class==1)); num22 = length(find(now_class==2)); num33 = length(find(now_class==3));   %å…¶ä»–äººç»“æŸæ—¶ï¼Œè¿˜åœ¨ä¸Šè¯¾çš„äººæœ‰å‡ ä¸ª
     num44 = length(find(now_class==4)); num55 = length(find(now_class==5)); num66 = length(find(now_class==6));
 end   
-%ÕÒ³ö¶ÔÓ¦µÄbegintimeºÍendtime    
+%æ‰¾å‡ºå¯¹åº”çš„begintimeå’Œendtime    
 endtime(find(endtime == 0)) = NaN;
 begintime = endtime - times_copy;
 begintime(find(isnan(begintime)==1)) = 0;
 endtime(find(isnan(endtime)==1)) = 0;
 
-%°Ñ¶àÓàµÄ±äÁ¿É¾³ý£¬¼ò½à£¡
+%æŠŠå¤šä½™çš„å˜é‡åˆ é™¤ï¼Œç®€æ´ï¼
 % clear AAAA a cl class_slice classend_site classfree_site isn i j k least_time m now_class now_time tf time_slice 
 % clear classes times
 % clear num1 num2 num3 num4 num5 num6 who1 who2 who3 who4 who5 who6
 
-%%Êä³ö½á¹ûTime_out
+%%è¾“å‡ºç»“æžœTime_out
 Time_out = cell(1, N);
 for i = 1:N
     Time_out{1, i} = [classes_copy(i, :); begintime(i, :); endtime(i, :)]; 
-    a = Time_out{1,i}';     %×ªÖÃ£¬ÎªÁËÉ¾µôÈ«Îª0µÄÁÐ
-    a(all(a==0,2),:)=[];    %É¾µôÈ«Îª0µÄÐÐ
-    a = a';                 %ÔÙ×ªÖÃ»ØÀ´
+    a = Time_out{1,i}';     %è½¬ç½®ï¼Œä¸ºäº†åˆ æŽ‰å…¨ä¸º0çš„åˆ—
+    a(all(a==0,2),:)=[];    %åˆ æŽ‰å…¨ä¸º0çš„è¡Œ
+    a = a';                 %å†è½¬ç½®å›žæ¥
     Time_out{1, i} = a;
 end
 
